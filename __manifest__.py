@@ -4,7 +4,7 @@
     'summary': 'Management system expressions of need',
     'description': """
     """,
-    'category': 'Zina',
+    'category': 'Expression of need',
     'author': 'Veone',
     'website': 'https://www.veone.net',
     'license': 'LGPL-3',
