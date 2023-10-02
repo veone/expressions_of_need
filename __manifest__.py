@@ -4,7 +4,7 @@
     'summary': 'Management system expressions of need',
     'description': """
     """,
-    'category': 'Zina',
+    'category': 'Expression of need',
     'author': 'Veone',
     'website': 'https://www.veone.net',
     'license': 'LGPL-3',
@@ -35,6 +35,12 @@
         'views/purchase_order_view.xml',
         'views/stock_commentary_view.xml',
         'views/stock_location_view.xml',
+    ],
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+        'static/description/form.png',
+        'static/description/generate.png',
     ],
     'installable': True,
     'auto_install': False
