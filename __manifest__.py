@@ -36,6 +36,12 @@
         'views/stock_commentary_view.xml',
         'views/stock_location_view.xml',
     ],
+    'images': [
+        'static/description/banner.png',
+        'static/description/icon.png',
+        'static/description/form.png',
+        'static/description/generate.png',
+    ],
     'installable': True,
     'auto_install': False
 }
