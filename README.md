@@ -5,9 +5,10 @@ The "Need Expression Management System" is a custom Odoo module designed to stre
 
 ## Features
 - **Customer Needs Management:** Capture and organize customer needs and requirements efficiently.
-- **Workflow Automation:** Automate the workflow for processing and reviewing customer needs.
-- **Status Tracking:** Easily track the status and progress of each customer need.
-- **Reports and Analytics:** Generate reports and gain insights into customer needs data.
+- **Needs Submission Form:** A needs submission form with customizable fields to collect specific information.
+Ability to attach relevant files or documents.
+- **Notifications:** Email notifications and/or push notifications to keep stakeholders informed of the status of requests.
+- **Integration with Other Systems:** Integration with other internal systems (Inventory, Procurement, etc.) for more cohesive needs management.
 
 ## Installation
 To install this module in your Odoo instance, follow these steps:
