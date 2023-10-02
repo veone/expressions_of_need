@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       
+        <!--Summary sheet report -->
+        <template id="summary_sheet_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="margin-top:20px;margin-left:30px;margin-right:30px;padding-bottom:0px">
+
+                            <h2 style="margin: auto; font-weight: bold;">Fiche N° : <span t-field="doc.name"/> </h2> 
+                            <p></p>
+
+                            <table style="width:100%;border-collapse:collapse;">
+                                <tr>
+                                    <td style="text-transform:uppercase">
+                                        <p>
+                                            <strong>
+                                                Statut : 
+                                                <span t-if="doc.state == 'validated'" style="background-color:#28a745 !important;color: #fff;"> Validated</span>
+                                                <span t-elif="doc.state == 'draft'" style="background-color:#ffac00 !important;color: #fff;"> Draft</span>
+                                                <span t-elif="doc.state == 'canceled'" style="background-color:#17a2b8 !important;color: #fff;"> Canceled</span>
+                                                <br />
+                                            </strong>
+                                        </p>
+                                        <p t-if="doc.date" name="date">
+                                            <strong>Date : </strong><t class="m-0" t-esc="doc.date.strftime('%d/%m/%Y')"/><br/>
+                                            <strong>Utilisateur : </strong><t class="m-0" t-esc="doc.create_uid.name"/><br/>
+                                            <!-- <strong>Site : </strong><t class="m-0" t-esc="doc.create_uid.name"/><br/> -->
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            
+                            <h2 style="margin: auto; font-weight: bold;">Catégorie : <span t-field="doc.categ_id.name"/> </h2> 
+                            <p></p>
+                            
+                            <table class="table table-sm o_main_table" name="invoice_line_table" style="width:100%;border-collapse:collapse;">
+                                <tr style="border:1px solid black;margin-top:40px;color:#ffffff;font-weight:bold;font-family:Calibri;font-size;16px;background-color:#53191a;text-align:center;height:45px">
+                                    <td name="th_description" class="text-center" colspan="2">
+                                        <span style="padding-top:15px">Article(s)</span>
+                                    </td>
+                                    <td name="th_quantity" class="text-center">
+                                        <span style="padding-top:15px">Quantité</span>
+                                    </td>
+                                    <td name="th_quantity" class="text-center">
+                                        <span style="padding-top:15px">Coût</span>
+                                    </td>
+                                    <td name="th_quantity" class="text-center">
+                                       <span style="padding-top:15px">Sous Total</span>
+                                    </td>
+                                </tr>
+                                <t t-foreach="doc.sheet_line_ids" t-as="product">
+                                    <tr style="height:45px;width:100px">
+                                        <td colspan="2" style="border:1px solid black;width:500px">
+                                            <span t-field="product.product_id"/>
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <t t-esc="int(product.quantity)"/> <span t-field="product.uom_id"/>
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="product.product_id.standard_price" t-options='{"widget": "monetary"}'/>
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;text-align:center;">
+                                            <span t-field="product.subtotal_amount" t-options='{"widget": "monetary"}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <p style="text-align: right; font-weight: bold; font-size:24px;">
+                                <span>Montant Total : </span><span t-field="doc.total_amount" t-options='{"widget": "monetary"}'/>
+                            </p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="print_summary_sheet_report" model="ir.actions.report">
+            <field name="name">Report summary sheet</field>
+            <field name="model">summary.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">'Rapport de fiche %s' %(object.name)</field>
+            <field name="report_name">expressions_of_need.summary_sheet_report</field>
+            <field name="report_file">expressions_of_need.summary_sheet_report</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Expression of need -->
+        <template id="expression_of_need_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page" style="margin-top:20px;margin-left:30px;margin-right:30px;padding-bottom:0px">
+                        
+
+                            <h2 style="margin: auto; font-weight: bold;">EXPRESSION DE BESOINS N° : <span t-field="doc.name"/> </h2> 
+                            <p></p>
+
+                            <table style="width:100%;border-collapse:collapse;">
+                                <tr>
+                                    <td style="text-transform:uppercase">
+                                        <p>
+                                            <strong>
+                                                Statut : 
+                                                <span t-if="doc.status_validation == 'delivered'" style="background-color:#28a745 !important;color: #fff;"> LIVRÉ</span>
+                                                <span t-elif="doc.status_validation == 'in_delivered'" style="background-color:#ffac00 !important;color: #fff;"> EN COURS DE LIVRAISON</span>
+                                                <span t-elif="doc.status_validation == 'not_delivered'" style="background-color:#17a2b8 !important;color: #fff;"> NON LIVRÉ</span>
+                                                <span t-elif="doc.status_validation == 'canceled'" style="background-color:#17a2b8 !important;color: #fff;"> ANNULÉ</span>
+                                                <br />
+                                            </strong>
+                                        </p>
+                                        <p t-if="doc.date" name="date">
+                                            <strong>Date : </strong><t class="m-0" t-esc="doc.date.strftime('%d/%m/%Y')"/><br/>
+                                            <strong>Utilisateur : </strong><t class="m-0" t-esc="doc.create_uid.name"/><br/>
+                                            <!-- <strong>Site : </strong><t class="m-0" t-esc="doc.create_uid.name"/><br/> -->
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+
+
+                            <table class="table table-sm o_main_table" name="invoice_line_table" style="width:100%;border-collapse:collapse;">
+                                <tr style="border:1px solid black;margin-top:40px;color:#ffffff;font-weight:bold;font-family:Calibri;font-size;16px;background-color:#00477a;text-align:center;height:45px">
+                                    <td name="th_description" class="text-center" colspan="2">
+                                        <span style="padding-top:15px">Article(s)</span>
+                                    </td>
+                                    <td name="th_quantity" class="text-center">
+                                        <span style="padding-top:15px">Quantité</span>
+                                    </td>
+                                    <td name="th_quantity" class="text-center">
+                                        <span style="padding-top:15px">Coût</span>
+                                    </td>
+                                </tr>
+                                <t t-foreach="doc.need_line_ids" t-as="need">
+                                    <tr style="height:45px;width:100px">
+                                        <td colspan="2" style="border:1px solid black;">
+                                            <span t-field="need.product_id"/>
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <t t-esc="int(need.quantity)"/> <span t-field="need.uom_id"/>
+                                            <br/>
+                                        </td>
+                                        <td style="border:1px solid black;">
+                                            <span t-field="need.product_id.standard_price"
+                                                  t-options='{"widget": "monetary"}'/>
+                                            <br/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <br/>
+                            
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <record id="print_expression_of_need_report" model="ir.actions.report">
+            <field name="name">Report expression of need</field>
+            <field name="model">expression.of.need</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">'Rapport expression %s' %(object.name)</field>
+            <field name="report_name">expressions_of_need.expression_of_need_report</field>
+            <field name="report_file">expressions_of_need.expression_of_need_report</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="record_articles_categories_xlsx" model="ir.actions.report">
+            <field name="name">Modèle Import Articles et Catégories</field>
+            <field name="model">expression.of.need</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">expressions_of_need.report_art_categ_xlsx</field>
+            <field name="report_file">expressions_of_need.report_art_categ_xlsx</field>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record model="ir.actions.server" id="put_eon_in_validated_state">
+            <field name="name">Valider</field>
+            <field name="model_id" ref="expressions_of_need.model_expression_of_need"/>
+            <field name="binding_model_id" ref="expressions_of_need.model_expression_of_need"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.put_in_validated_state()
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="put_sum_in_validated_state">
+            <field name="name">Valider</field>
+            <field name="model_id" ref="expressions_of_need.model_summary_sheet"/>
+            <field name="binding_model_id" ref="expressions_of_need.model_summary_sheet"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.put_in_validated_state()
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+0001,Expression of need,model_expression_of_need,base.group_erp_manager,1,1,1,1
+0002,Expression of need line,model_expression_of_need_line,base.group_erp_manager,1,1,1,1
+0003,Summary sheet,model_summary_sheet,base.group_erp_manager,1,1,1,1
+0004,Summary sheet line,model_summary_sheet_line,base.group_erp_manager,1,1,1,1
+0005,Summary wizard summary sheet,model_wizard_summary_sheet,base.group_erp_manager,1,1,1,1
+0006,Summary wizard summary sheet,model_wizard_summary_sheet,base.group_erp_manager,1,1,1,1
+0007,Summary wizard summary sheet,model_wizard_sheet_line,base.group_erp_manager,1,1,1,1
+0008,Summary wizard stock generation,model_wizard_stock_transfer_generation,base.group_erp_manager,1,1,1,1
+
+uvg_0001,Expression of need,model_expression_of_need,expressions_of_need.expression_of_need_user_viewer_group,1,1,0,0
+uvg_0002,Expression of need line,model_expression_of_need_line,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,0
+uvg_0003,Summary sheet,model_summary_sheet,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,0
+uvg_0004,Summary sheet line,model_summary_sheet_line,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,0
+uvg_0005,Summary wizard summary sheet,model_wizard_summary_sheet,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,1
+uvg_0006,Summary wizard summary sheet,model_wizard_sheet_line,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,1
+uvg_0007,Summary wizard stock generation,model_wizard_stock_transfer_generation,expressions_of_need.expression_of_need_user_viewer_group,1,1,1,1
+
+expression_of_need_site_agent_group_uvg_0001,Expression of need,model_expression_of_need,expressions_of_need.expression_of_need_site_agent_group,1,1,1,0
+expression_of_need_site_agent_group_uvg_0002,Expression of need line,model_expression_of_need_line,expressions_of_need.expression_of_need_site_agent_group,1,1,1,0
+expression_of_need_site_agent_group_uvg_0003,Summary sheet,model_summary_sheet,expressions_of_need.expression_of_need_site_agent_group,1,1,1,0
+expression_of_need_site_agent_group_uvg_0004,Summary sheet line,model_summary_sheet_line,expressions_of_need.expression_of_need_site_agent_group,1,1,1,0
+expression_of_need_site_agent_group_uvg_0005,Summary wizard summary sheet,model_wizard_summary_sheet,expressions_of_need.expression_of_need_site_agent_group,1,1,1,1
+expression_of_need_site_agent_group_uvg_0006,Summary wizard summary sheet,model_wizard_sheet_line,expressions_of_need.expression_of_need_site_agent_group,1,1,1,1
+expression_of_need_site_agent_group_uvg_0007,Summary wizard stock generation,model_wizard_stock_transfer_generation,expressions_of_need.expression_of_need_site_agent_group,1,1,1,1
+
+umg_0001,Expression of need,model_expression_of_need,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0002,Expression of need line,model_expression_of_need_line,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0003,Summary sheet,model_summary_sheet,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0004,Summary sheet line,model_summary_sheet_line,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0005,Summary wizard summary sheet,model_wizard_summary_sheet,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0006,Summary wizard summary sheet,model_wizard_sheet_line,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+umg_0007,Summary wizard stock generation,model_wizard_stock_transfer_generation,expressions_of_need.expression_of_need_manager_group,1,1,1,1
+
+admin_0001,Summary wizard artcat Line,model_wizard_artcat_import_line,base.group_system,1,1,1,1
+admin_0002,Summary wizard artcat,model_wizard_artcat_import,base.group_system,1,1,1,1
+
+comment_0001,Stock Commentary Wizard,model_wizard_stock_commentary,,1,1,1,1
+comment_0002,Stock Commentary,model_stock_commentary,,1,0,0,0

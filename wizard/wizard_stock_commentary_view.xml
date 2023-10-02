@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="wizard_stock_commentary_view_form" model="ir.ui.view">
+            <field name="name">wizard.stock.commentary.view.form</field>
+            <field name="model">wizard.stock.commentary</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="inventory_diff_quantity"/>
+                            <h1 style="color: #d42e12;">
+                                <field name="inventory_diff_quantity" readonly="1" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="quantity" readonly="1" />
+                            <field name="inventory_quantity" readonly="1" />
+                            <field name="location_id" readonly="1" />
+                            <field name="product_id" readonly="1" />
+                            <field name="stock_quant_id" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Commentaire">
+                                <field name="commentary" no-label="1"/>
+                            </page>
+                        </notebook>
+                        <footer>
+                            <button string="Confirmer" name="confirm" class="oe_highlight" type="object"/>
+                            <button string="Annuler" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="action_wizard_stock_commentary" model="ir.actions.act_window">
+        <field name="name">Commentaire</field>
+        <field name="res_model">wizard.stock.commentary</field>
+        <field name="target">new</field>
+        <field name="view_mode">form</field>
+    </record>
+    </data>
+</odoo>

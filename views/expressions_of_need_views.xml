@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Expression of need -->
+        <record id="expression_of_need_form_view" model="ir.ui.view">
+            <field name="name">expression.of.need.form</field>
+            <field name="model">expression.of.need</field>
+            <field name="arch" type="xml">
+                <form string="Expression of need">
+                    <header>
+                        <button name="put_in_waiting_state" string="Submit" type="object"
+                                attrs="{'invisible':[('state','!=', 'draft')]}"
+                                groups="expressions_of_need.expression_of_need_site_agent_group,expressions_of_need.expression_of_need_manager_group"
+                                confirm="Would you like to put state to submit ?" class="oe_highlight"/>
+                        <button name="put_in_validated_state" string="validate" type="object"
+                                attrs="{'invisible':[('state','!=', 'waiting')]}"
+                                groups="expressions_of_need.expression_of_need_manager_group"
+                                confirm="Would you like to put state to validated ?" class="oe_highlight"/>
+
+                        <button name="put_in_canceled_state" string="Cancel" type="object"
+                                attrs="{'invisible':[('state','!=', 'validated')]}"
+                                groups="expressions_of_need.expression_of_need_manager_group"
+                                confirm="Would you like to put state to canceled ?" class="btn-secondary"/>
+
+                        <button name="put_in_draft_state" string="Back" type="object"
+                                attrs="{'invisible':[('state','not in', ('waiting', 'canceled'))]}"
+                                groups="expressions_of_need.expression_of_need_manager_group"
+                                confirm="Would you like to put state to draft ?" class="btn-secondary"/>
+                        <button attrs="{'invisible': ['|', ('status_validation', '=', 'delivered'), ('state', '!=', 'validated')]}"
+                                name="generate_intern_transfer" type="object" string="Générer Tranfert Interne"
+                                groups="expressions_of_need.expression_of_need_manager_group" class="btn btn-primary"/>
+                        <button name="%(expressions_of_need.print_expression_of_need_report)d" string="Generate report"
+                                type="action" icon="fa-print" attrs="{'invisible': [('state', '!=', 'validated')]}"/>
+                        <field name="state" widget="statusbar"/>
+                        <field name="status_validation" invisible="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box"
+                             attrs="{'invisible':['|', ('expression_of_need_count','=', 0), ('state','!=', 'validated')]}">
+                            <button name="action_open_transfers"
+                                    type="object" class="oe_stat_button" icon="fa-truck">
+                                <field name="expression_of_need_count"/>
+                                Reçu(s)
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Not Delivered" bg_color="bg-info"
+                                attrs="{'invisible': ['|', ('state', '!=', 'validated'), '|', ('need_line_ids', '=', False), ('status_validation', '!=', 'not_delivered')]}"/>
+                        <widget name="web_ribbon" title="In Delivered" bg_color="bg-warning"
+                                attrs="{'invisible': ['|', ('state', '!=', 'validated'), '|', ('need_line_ids', '=', False), ('status_validation', '!=', 'in_delivered')]}"/>
+                        <widget name="web_ribbon" title="Delivered" bg_color="bg-success"
+                                attrs="{'invisible': ['|', ('state', '!=', 'validated'), '|', ('need_line_ids', '=', False), ('status_validation', '!=', 'delivered')]}"/>
+                        <widget name="web_ribbon" title="Canceled" bg_color="bg-danger"
+                                attrs="{'invisible': ['|', ('state', 'not in', ('canceled', 'validated')), '|', ('need_line_ids', '=', False), ('status_validation', '!=', 'canceled')]}"/>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" string="Reférence" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date" required="1"
+                                       attrs="{'readonly': [('state', 'in', ('validated', 'canceled'))]}"/>
+                            </group>
+                            <group>
+                                <field name="user_id" readonly="1"/>
+                                <field name="total_quantity" invisible="1"/>
+                                <field name="total_quantity_validate" invisible="1"/>
+                                <field name="total_quantity_remaining" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="need_line_ida" string="Expression of need line">
+                                <field name="need_line_ids" options="{'no_open': True,}"
+                                       attrs="{'readonly': [('state', 'in', ('canceled', 'validated'))]}">
+                                    <tree editable="bottom" decoration-success="quantity_validate == quantity"
+                                          decoration-warning="quantity_validate > quantity"
+                                          decoration-danger="quantity > quantity_validate">
+                                        <field name="product_id" options="{'no_open': True, 'no_create': True}"
+                                               width="30" required="1"/>
+                                        <field name="quantity" width="25"/>
+                                        <field name="uom_id" width="25" required="1"
+                                               options="{'no_open': True, 'no_create': True}"/>
+                                        <field name="quantity_validate" readonly="1"
+                                               width="15"/>
+                                        <field name="quantity_remaining" width="15"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="o_attachment_preview"/>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="expression_of_need_tree_view" model="ir.ui.view">
+            <field name="name">expression.of.need.tree</field>
+            <field name="model">expression.of.need</field>
+            <field name="arch" type="xml">
+                <tree string="Expression of need" import="false" default_order='create_date desc, state'
+                      js_class="account_tree"
+                      decoration-info="state == 'draft'" decoration-warning="state == 'waiting'"
+                      decoration-danger="state == 'canceled'"
+                      decoration-success="state == 'validated'" sample="1">
+                    <header>
+                        <button name="put_in_validated_state" string="valider" type="object"
+                                groups="expressions_of_need.expression_of_need_manager_group"
+                                confirm="Would you like to put state to validated ?" class="oe_highlight"/>
+                    </header>
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="state" widget="badge" decoration-danger="state == 'canceled'"
+                           decoration-info="state == 'draft'" decoration-warning="state == 'waiting'"
+                           decoration-success="state == 'validated'"/>
+                    <field name="status_validation" widget="badge" decoration-danger="status_validation == 'canceled'"
+                           decoration-info="status_validation == 'not_delivered'"
+                           decoration-warning="status_validation == 'in_delivered'"
+                           decoration-success="status_validation == 'delivered'"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="expression_of_need_search_view" model="ir.ui.view">
+            <field name="name">expression.of.need.search</field>
+            <field name="model">expression.of.need</field>
+            <field name="arch" type="xml">
+                <search string="Expression of need">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                    <field name="filter_validation"/>
+                    <filter string="Draft" name="draft_state" domain="[('state', '=', 'draft')]"/>
+                    <filter string="Waiting" name="waiting_state" domain="[('state', '=', 'waiting')]"/>
+                    <filter string="Validated" name="validated_state" domain="[('state', '=', 'validated')]"/>
+                    <filter string="canceled" name="canceled_state" domain="[('state', '=', 'canceled')]"/>
+
+                    <filter string="Non Livré" name="not_delivered_filter"
+                            domain="[('filter_validation', '=', 'not_delivered')]"/>
+                    <filter string="En cours de livraison" name="in_delivered_filter"
+                            domain="[('filter_validation', '=', 'in_delivered')]"/>
+                    <filter string="Livré" name="delivered_filter" domain="[('filter_validation', '=', 'delivered')]"/>
+
+                    <filter name="today_needs" string="Besoins du jour"
+                            domain="[('date','=',(datetime.datetime.now()).strftime('%Y-%m-%d'))]"/>
+
+                    <group expand="1" string="Group By">
+                        <filter string="User" name="user_id" domain="[]"
+                                context="{'group_by':'user_id'}"/>
+                        <filter string="State" name="state" domain="[]"
+                                context="{'group_by':'state'}"/>
+                        <filter string="Statut de Livraison" name="filter_validation" domain="[]"
+                                context="{'group_by':'filter_validation'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="expression_of_need_act_window" model="ir.actions.act_window">
+            <field name="name">Expression of need</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">expression.of.need</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context" eval="{'search_default_today_needs': 1}"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Expression of need.
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Expression of need"
+                  groups="base.group_erp_manager,expression_of_need_user_viewer_group,expression_of_need_manager_group"
+                  id="expression_of_need_root_menu" web_icon="expressions_of_need,static/description/icon.png"/>
+
+        <menuitem name="Expression of need" id="expression_of_need_menu" parent="expression_of_need_root_menu"
+                  action="expression_of_need_act_window"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_inventory_adjustment_name_form_inherit" model="ir.ui.view">
+            <field name="name">stock.inventory.adjustment.name.form</field>
+            <field name="model">stock.inventory.adjustment.name</field>
+            <field name="inherit_id" ref="stock.stock_inventory_adjustment_name_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div" position="after">
+                    <notebook>
+                        <page string="Commentaires">
+                            <field name="wizard_stock_commentary_ids">
+                                <tree create="0" delete="0" string="Commentaire" editable="bottom">
+                                    <!-- <field name="name" />  -->
+                                    <field name="location_id" /> 
+                                    <field name="product_id" />
+                                    <field name="inventory_diff_quantity" />
+                                    <field name="commentary" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

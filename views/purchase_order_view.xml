@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="summary_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                   <field name="summary_field_hider" invisible="1" readonly="1"/>
+                   <field name="summary_sheet_id" string="Fiche de synthèse" attrs="{'invisible': [('summary_field_hider', '=', True)]}" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

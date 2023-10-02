@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_artcat_import_line_view_form">
+            <field name="name">wizard.artcat.import.line.view.form</field>
+            <field name="model">wizard.artcat.import.line</field>
+            <field name="arch" type="xml">
+                <form string="Import Category And Article Lines">
+                    <group>
+                        <field name="monarticle"/>
+                        <field name="category_id"/>
+                        <field name="sub_category_id"/>
+                        <field name="unit_of_measure_id"/>
+                    </group>
+                  
+                    <footer>
+                        <button string="Importer" name="import_list" type="object" class="btn-primary" data-hotkey="q"/>
+                        <button string="Annuler" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="wizard_artcat_import_line_view_action" model="ir.actions.act_window">
+            <field name="name">Wizard import list line</field>
+            <field name="res_model">wizard.artcat.import.line</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

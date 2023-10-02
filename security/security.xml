@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="expression_of_need_category">
+            <field name="name">Need expression management system</field>
+            <field name="description">Expression of need</field>
+            <field name="sequence">10</field>
+        </record>
+        <!-- Role -->
+        <record id="expression_of_need_user_viewer_group" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="expressions_of_need.expression_of_need_category"/>
+        </record>
+
+        <record id="expression_of_need_manager_group" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids" eval="[(4, ref('stock.group_stock_user'))]"/>
+            <field name="category_id" ref="expressions_of_need.expression_of_need_category"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+
+        <record id="expression_of_need_site_agent_group" model="res.groups">
+            <field name="name">Site agent</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('expressions_of_need.expression_of_need_user_viewer_group')), (4, ref('stock.group_stock_user'))]"/>
+            <field name="category_id" ref="expressions_of_need.expression_of_need_category"/>
+        </record>
+        
+        <!-- Expression of need rule -->
+        <record id="expression_of_need_manager_group_rule" model="ir.rule">
+            <field name="name">Expression of need manager viewer group</field>
+            <field name="model_id" ref="expressions_of_need.model_expression_of_need"/>
+            <field name="groups" eval="[(4, ref('expressions_of_need.expression_of_need_manager_group'))]"/>
+            <field name="domain_force">[]</field>
+        </record>
+        <record id="expression_of_need_user_viewer_group_rule" model="ir.rule">
+            <field name="name">Expression of need user and site agent viewer group</field>
+            <field name="model_id" ref="expressions_of_need.model_expression_of_need"/>
+            <field name="groups"
+                   eval="[(4, ref('expressions_of_need.expression_of_need_user_viewer_group')), (4, ref('expressions_of_need.expression_of_need_site_agent_group'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+        
+        <!-- Summary sheet rule -->
+        <record id="expression_of_need_sheet_manager_group_rule" model="ir.rule">
+            <field name="name">Expression of need sheet manager viewer group</field>
+            <field name="model_id" ref="expressions_of_need.model_summary_sheet"/>
+            <field name="groups" eval="[(4, ref('expressions_of_need.expression_of_need_manager_group'))]"/>
+            <field name="domain_force">[]</field>
+        </record>
+        <record id="expression_of_need_sheet_user_viewer_group_rule" model="ir.rule">
+            <field name="name">Expression of need sheet user and site agent viewer group</field>
+            <field name="model_id" ref="expressions_of_need.model_summary_sheet"/>
+            <field name="groups"
+                   eval="[(4, ref('expressions_of_need.expression_of_need_user_viewer_group')), (4, ref('expressions_of_need.expression_of_need_site_agent_group'))]"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+        </record>
+        
+        <!-- Purchase rule -->
+        <record id="expression_purchase_user_viewer_group_rule" model="ir.rule">
+            <field name="name">Purchase user viewer group</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups"
+                   eval="[(4, ref('purchase.group_purchase_user')), (4, ref('expressions_of_need.expression_of_need_user_viewer_group')), (4, ref('expressions_of_need.expression_of_need_site_agent_group'))]"/>
+            <field name="domain_force">[('user_id', '=', user.id)]</field>
+        </record>
+        <record id="expression_purchase_manager_group_rule" model="ir.rule">
+            <field name="name">Purchase manager viewer group</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="groups"
+                   eval="[(4, ref('purchase.group_purchase_manager')), (4, ref('expressions_of_need.expression_of_need_manager_group'))]"/>
+            <field name="domain_force">[]</field>
+        </record>
+        
+        <!-- Stock picking rule -->
+        <record id="expression_stock_user_viewer_group_rule" model="ir.rule">
+            <field name="name">Stock picking user viewer group</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="groups"
+                   eval="[(4, ref('stock.group_stock_user')), (4, ref('expressions_of_need.expression_of_need_user_viewer_group')), (4, ref('expressions_of_need.expression_of_need_site_agent_group'))]"/>
+            <field name="domain_force">['|', ('partner_id', '=', user.partner_id.id), ('create_uid', '=', user.id)]
+            </field>
+        </record>
+        <record id="expression_stock_manager_group_rule" model="ir.rule">
+            <field name="name">Stock picking manager viewer group</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="groups"
+                   eval="[(4, ref('stock.group_stock_manager')), (4, ref('expressions_of_need.expression_of_need_manager_group'))]"/>
+            <field name="domain_force">[]</field>
+        </record>
+    </data>
+</odoo>

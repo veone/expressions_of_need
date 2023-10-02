@@ -1,0 +1,1 @@
+from . import art_categ_import_file
