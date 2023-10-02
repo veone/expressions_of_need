@@ -1,14 +1,19 @@
-# Need Expression Management System
+# Requirements Expression Management System
 
 ## Description
-The "Need Expression Management System" is a custom Odoo module designed to streamline and manage the process of collecting and managing customer needs and requirements.
+The “Requirements Expression Management System” is a custom Odoo module designed to streamline and manage the process of collecting and managing user requirements.
 
-## Features
-- **Customer Needs Management:** Capture and organize customer needs and requirements efficiently.
-- **Needs Submission Form:** A needs submission form with customizable fields to collect specific information.
-Ability to attach relevant files or documents.
-- **Notifications:** Email notifications and/or push notifications to keep stakeholders informed of the status of requests.
-- **Integration with Other Systems:** Integration with other internal systems (Inventory, Procurement, etc.) for more cohesive needs management.
+## Manage customer needs
+Effectively record and address customer needs and requirements
+
+## Needs submission form
+The requirement submission form allows the user to register their employer requirements with all the information.
+
+## Notifications
+Email notifications and/or push notifications to keep stakeholders informed of the status of requests.
+
+## Integration with Other Systems
+Integration with other internal systems (Inventory, Procurement, etc.) for more cohesive needs management.
 
 ## Installation
 To install this module in your Odoo instance, follow these steps:
@@ -29,7 +34,7 @@ git pull origin https://github.com/veone/expressions_of_need.git
 5. Click "Install."
 
 ## Configuration
-- [Explain any specific configuration or setup required to use your module.]
+- No specific configuration or setup required to use your module.
 
 ## Usage
 - [Provide examples of how to use your module, including any necessary screenshots or instructions.]
