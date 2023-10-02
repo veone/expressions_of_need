@@ -36,9 +36,6 @@ git pull origin https://github.com/veone/expressions_of_need.git
 ## Configuration
 - No specific configuration or setup required to use your module.
 
-## Usage
-- [Provide examples of how to use your module, including any necessary screenshots or instructions.]
-
 ## Contributors
 - Veone (@veone)
 ## License
