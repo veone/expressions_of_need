@@ -5,7 +5,7 @@
     'description': """
     """,
     'category': 'Expression of need',
-    'author': 'Veone',
+    'author': 'Veone Technologies',
     'website': 'https://www.veone.net',
     'license': 'LGPL-3',
     'depends': [

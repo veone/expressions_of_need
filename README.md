@@ -36,9 +36,6 @@ git pull origin https://github.com/veone/expressions_of_need.git
 ## Configuration
 - No specific configuration or setup required to use your module.
 
-## Usage
-- [Provide examples of how to use your module, including any necessary screenshots or instructions.]
-
 ## Contributors
 - Veone (@veone)
 ## License
@@ -47,5 +44,12 @@ This module is distributed under the MIT License. See the LICENSE file for detai
 For any questions, suggestions, or bug reports, please open an issue on this repository.
 
 ## Changelog
-For any questions, suggestions, or bug reports, please open an issue on this repository.
-- 16.0.1 (2023-10-01): Initial release.
+- **16.0.1 (2023-10-01)**: Initial release.
+
+ Maintainer
+----------
+<img src="https://www.veone.net/wp-content/uploads/2019/01/logo_accueil.png"/>
+
+This module is maintained by the Veone Technologies.
+
+Our expertise: Opensource & Cloud technologies. Our mission: Facilitate access to technologies for VSEs / SMEs / SMIs based on solutions built from the best Opensource offers, please visit https://www.veone.net/
